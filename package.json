@@ -1,21 +1,21 @@
 {
   "name": "part_3",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "../node_modules/.bin/nodemon server.js",
+    "start": "./node_modules/.bin/nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
-    "debug": "../node_modules/.bin/ndb server.js"
+    "debug": "./node_modules/.bin/ndb server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^7.32.0",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.13"
   },
   "dependencies": {
+    "all": "^0.0.0",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "dotenv": "^10.0.0",
@@ -27,5 +27,14 @@
     "nodemailer": "^6.6.5",
     "slugify": "^1.6.0",
     "validator": "^13.6.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shreyassanghvi/Nautors-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shreyassanghvi/Nautors-app/issues"
+  },
+  "homepage": "https://github.com/shreyassanghvi/Nautors-app#readme",
+  "description": ""
 }
