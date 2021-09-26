@@ -1,7 +1,12 @@
 const express = require("express");
 const app = express();
-
+const rateLimit = require('express-rate-limit');
 const morgan = require("morgan");
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-santize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
+
 const tourRouter = require("./routes/tourRoutes");
 const userRouter = require("./routes/userRoutes");
 const AppError = require('./utils/appError');
@@ -9,10 +14,26 @@ const globalErrorHandler = require('./controllers/errorController');
 ///////////////////////////////////////////////////
 //  Middleware
 //////////////////////////////////////////////////
+app.use(helmet());
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
-app.use(express.json());
-app.use(express.static(`${__dirname}/public/`));
 
+
+const limiter = rateLimit({
+    max: 100,
+    windowMs: 60 * 60 * 1000,
+    message: 'Too many request!! please try again later'
+});
+app.use('/api', limiter);
+
+app.use(express.json({limit: "10kb"}));
+app.use(mongoSanitize());
+app.use(xss());
+app.use(hpp({
+    whiteList: ['duration'],
+}));
+
+
+app.use(express.static(`${__dirname}/public/`));
 ///////////////////////////////////////////////////
 //  router Calls
 //////////////////////////////////////////////////

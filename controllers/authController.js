@@ -11,6 +11,16 @@ const signInToken = (id) => {
 }
 const createAndSendToken = (user, statusCode, res) => {
     let token = signInToken(user._id);
+
+    let cookieOption = {
+        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRATION * 24 * 60 * 60 * 1000),
+        secure: false,
+        httpOnly: true,
+    };
+    if (process.env.NODE_ENV === 'production') {
+        cookieOption.secure = true;
+    }
+    res.cookie('jwt', token, cookieOption);
     return res.status(statusCode).json({
         status: 'success',
         token,
@@ -21,6 +31,8 @@ const createAndSendToken = (user, statusCode, res) => {
         }
     });
 };
+
+
 exports.signup = catchAsync(async (req, res, next) => {
     const newUser = await User.create(req.body);
     createAndSendToken(newUser, 201, res);
