@@ -2,6 +2,8 @@ const User = require('../models/userModel');
 const APIFeatures = require('../utils/APIFeatures');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require("../utils/appError");
+const factory = require("./handlerFactory");
+const Tour = require("../models/tourModel");
 
 ///////////////////////////////////////////////////
 //  Callback Function
@@ -58,17 +60,5 @@ exports.getUserById = async (req, res) => {
         data: {users}
     });
 };
-exports.updateUserById = (req, res) => {
-    return res.status(500).json({
-        status: 'Error',
-        message: "routes Not Implemented"
-    });
-};
-exports.deleteUserById = (req, res) => {
-    return res.status(500).json({
-        status: 'Error',
-        message: "routes Not Implemented"
-    });
-};
-
-// export {deleteUserById,updateUserById,getUserById,getAllUsers,createUser};
+exports.updateUserById = factory.updateOne(User);
+exports.deleteUserById = factory.deleteOne(User);
