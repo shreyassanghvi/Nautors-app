@@ -11,17 +11,10 @@ const Tour = require("../models/tourModel");
 exports.createUser = (req, res) => {
     return res.status(500).json({
         status: 'Error',
-        message: "routes Not Implemented"
+        message: "routes Not Implemented! Please use /signup instead."
     });
 };
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-    const users = await User.find();
-    return res.status(200).json({
-        status: 'success',
-        result: users.length,
-        data: {users}
-    });
-});
+exports.getAllUsers = factory.getAll(User);
 
 const filterObject = (obj, ...allowedOFields) => {
     const newObject = {};
@@ -52,13 +45,6 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
 
     res.status(204).json({status: 'success', data: null});
 });
-exports.getUserById = async (req, res) => {
-    const users = await User.findById(req.params.id);
-    return res.status(200).json({
-        status: 'success',
-        result: users.length,
-        data: {users}
-    });
-};
+exports.getUserById = factory.getOne(User);
 exports.updateUserById = factory.updateOne(User);
 exports.deleteUserById = factory.deleteOne(User);
