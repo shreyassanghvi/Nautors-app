@@ -14,16 +14,16 @@ router.route('/top-five-cheap')
 router.route('/tour-stats')
     .get(controller.getTourStats);
 router.route('/monthly-plan/:year')
-    .get(controller.getMonthlyPlan);
+    .get(authController.protect, authController.resitrictTo('admin', 'lead-guide', 'guide'), controller.getMonthlyPlan);
 router
     .route('/')
-    .get(authController.protect, authController.resitrictTo('admin'), controller.getAllTours)
-    .post(controller.createNewTour);
+    .get(controller.getAllTours)
+    .post(authController.protect, authController.resitrictTo('admin', 'lead-guide'), controller.createNewTour);
 router
     .route('/:id')
     .get(controller.getTourById)
-    .patch(controller.updateTourById)
-    .delete(authController.protect, authController.resitrictTo('admin'), controller.deleteTourById);
+    .patch(authController.protect, authController.resitrictTo('admin', 'lead-guide'), controller.updateTourById)
+    .delete(authController.protect, authController.resitrictTo('admin', 'lead-guide'), controller.deleteTourById);
 
 
 module.exports = router;
