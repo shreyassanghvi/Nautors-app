@@ -16,3 +16,4 @@ router.route('/:id')
     .patch(authController.resitrictTo('user', 'admin'), controller.updateReviewById)
 
 module.exports = router;
+

@@ -15,6 +15,9 @@ router.route('/tour-stats')
     .get(controller.getTourStats);
 router.route('/monthly-plan/:year')
     .get(authController.protect, authController.resitrictTo('admin', 'lead-guide', 'guide'), controller.getMonthlyPlan);
+
+router.route('/tours-within/:distance/center/:latlan/unit/:unit').get(controller.getToursWithin)
+
 router
     .route('/')
     .get(controller.getAllTours)

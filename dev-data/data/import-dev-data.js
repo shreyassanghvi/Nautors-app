@@ -5,7 +5,7 @@ const Tour = require('../../models/tourModel');
 const User = require('../../models/userModel');
 const Review = require('../../models/reviewModel');
 
-dotenv.config({path: `../../config.env`});
+dotenv.config({path: './config.env'});
 
 ///////////////////////////////////////////////////
 // config mongoose
@@ -34,7 +34,7 @@ const reviews = JSON.parse(fs.readFileSync(`${__dirname}/reviews.json`, 'utf-8')
 const importData = async () => {
     try {
         await Tour.create(tours);
-        await User.create(users);
+        await User.create(users, {validateBeforeSave: false});
         await Review.create(reviews);
     } catch (e) {
         console.log(e)
