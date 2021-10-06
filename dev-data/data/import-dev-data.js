@@ -36,7 +36,8 @@ const importData = async () => {
         await User.create(users, {validateBeforeSave: false});
         await Review.create(reviews);
     } catch (e) {
-        console.log(e)
+        console.log(e);
+        process.exit(-1);
     }
 }
 

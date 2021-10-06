@@ -25,7 +25,8 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.connect(DB)
-    .then(() => console.log('DB Connection established'));
+    .then(() => console.log('DB Connection established'))
+    .catch(console.error);
 
 
 ///////////////////////////////////////////////////
