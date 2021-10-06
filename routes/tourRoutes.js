@@ -8,7 +8,7 @@ const reviewRouter = require('./reviewRoutes')
 //////////////////////////////////////////////////
 
 router.use('/:tourId/review', reviewRouter);
-
+router.route('/distances/:latlan/unit/:unit').get(controller.getDistances);
 router.route('/top-five-cheap')
     .get(controller.aliasTopTour, controller.getAllTours)
 router.route('/tour-stats')
