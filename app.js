@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require("express");
 const app = express();
 const rateLimit = require('express-rate-limit');
@@ -6,7 +7,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
-
+const viewRouter = require("./routes/viewRoutes")
 const tourRouter = require("./routes/tourRoutes");
 const userRouter = require("./routes/userRoutes");
 const reviewRouter = require("./routes/reviewRoutes");
@@ -15,6 +16,10 @@ const globalErrorHandler = require('./controllers/errorController');
 ///////////////////////////////////////////////////
 //  Middleware
 //////////////////////////////////////////////////
+// app.engine('pug', require('pug').__express)
+app.set('view engine', 'pug');
+app.set('views', path.join(`${__dirname}`, 'views'));
+app.use(express.static(path.join(`${__dirname}`, 'public')));
 app.use(helmet());
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
@@ -34,10 +39,11 @@ app.use(hpp({
 }));
 
 
-app.use(express.static(`${__dirname}/public/`));
 ///////////////////////////////////////////////////
 //  router Calls
 //////////////////////////////////////////////////
+
+app.use('/', viewRouter)
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reviewRouter);
